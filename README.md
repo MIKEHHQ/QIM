@@ -6,7 +6,7 @@ Q-cell transistor-level connectivity netlist.
 | Directory | Files and contents |
 | --- | --- |
 | [0_quantization](0_quantization) | `measured_boundaries.csv`: 31 switching boundaries; `code_intervals.csv`: 32 quantization intervals; `input_code_decoder.csv`: 251 input-voltage/code pairs; `metadata.json`: range, encoding and source checksums. |
-| [1_ssr](1_ssr) | `ssr_decisions.csv`: 1,000 paired decisions and quantization values for Staggered-State Resolution (SSR). |
+| [1_ssr](1_ssr) | `ssr_decisions.csv`: processed paired-decision data and quantization values for evaluating Staggered-State Resolution (SSR). |
 | [2_boundary_programming](2_boundary_programming) | `convergence.csv`: boundary-placement controller example; `operation_counts.csv`: conductance-read and voltage-probe counts. |
 | [3_system_benchmark](3_system_benchmark) | `adc_costs.csv`: ADC costs and reductions; `system_costs.csv`: system component costs and shares; `cost_assumptions.json`: technology-normalization and core-cost inputs. |
 | [4_netlist](4_netlist) | `qcell_connectivity.sp`: SPICE-format Q-cell connectivity, including input branches, bias pull-up and output stage. |
@@ -24,16 +24,15 @@ and exclude their upper endpoint, except that 1.20 V belongs to code 31.
 The nominal LSB is 15.625 mV. The 31 boundaries yield maximum absolute
 INL/DNL of 0.303/0.503 LSB.
 
-## SSR decision data
+## SSR mapping evaluation
 
 The table contains 10 repeats of 100 input points near a 0.98125 V boundary.
 `C1_bit` and `C2_bit` are logical decisions; `disagreement` is their XOR.
 The `*_value_v` columns contain mapped quantization values in V.
 Agreement selects a neighboring value and disagreement selects the target value.
 
-The paired data use a common input grid. C2 underwent a +7.035875 mV input-axis
-alignment and linear interpolation with constant endpoint extension before
-decision extraction. The file contains the resulting processed decisions.
+The CSV contains processed paired-decision data on a common input grid,
+used for numerical evaluation of the SSR output mapping.
 
 ## Boundary-programming benchmark
 
