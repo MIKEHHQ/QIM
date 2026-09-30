@@ -1,0 +1,11 @@
+﻿check,G_A_uS,boundary_v,error_mV,probe_pair,status,next_action
+0,100.0,0.821,-35,11,Low,SET
+1,130.0,0.886,30,00,High,RESET
+2,106.0,0.836,-20,11,Low,SET
+3,122.0,0.871,15,00,High,RESET
+4,111.0,0.847,-9,11,Low,SET
+5,116.0,0.858,2,01,Pass,HOLD
+6,114.5,0.855,-1,01,Pass,HOLD
+7,118.0,0.863,7,00,High,RESET
+8,113.0,0.852,-4,01,Pass,HOLD
+9,115.0,0.856,0,01,Pass,HOLD
