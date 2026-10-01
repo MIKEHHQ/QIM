@@ -1,4 +1,4 @@
-* QIM Q-cell connectivity
+* QIM Q-cell netlist
 * MOS terminal order: drain gate source bulk.
 * Memristor terminal order: terminal_1 terminal_2.
 * NMOS_GENERIC, PMOS_GENERIC and MEMRISTOR are device-type placeholders.

@@ -1,22 +1,23 @@
 # QIM
 
-Quantization-in-Memory (QIM) characterization data, circuit benchmarks and a
-Q-cell transistor-level connectivity netlist.
+Quantization-in-Memory (QIM) ADC transfer-characteristic data, circuit
+benchmarks and a Q-cell transistor-level netlist.
 
 | Directory | Files and contents |
 | --- | --- |
 | [0_quantization](0_quantization) | `measured_boundaries.csv`: 31 switching boundaries; `code_intervals.csv`: 32 quantization intervals; `input_code_decoder.csv`: 251 input-voltage/code pairs; `metadata.json`: range, encoding and source checksums. |
-| [1_ssr](1_ssr) | `ssr_decisions.csv`: processed paired-decision data and quantization values for evaluating Staggered-State Resolution (SSR). |
-| [2_boundary_programming](2_boundary_programming) | `convergence.csv`: boundary-placement controller example; `operation_counts.csv`: conductance-read and voltage-probe counts. |
+| [1_ssr](1_ssr) | `ssr_decisions.csv`: numerical example of the Staggered-State Resolution (SSR) decision-to-value mapping. |
+| [2_boundary_programming](2_boundary_programming) | `convergence.csv`: boundary-placement sequence; `operation_counts.csv`: conductance-read and voltage-probe counts. |
 | [3_system_benchmark](3_system_benchmark) | `adc_costs.csv`: ADC costs and reductions; `system_costs.csv`: system component costs and shares; `cost_assumptions.json`: technology-normalization and core-cost inputs. |
-| [4_netlist](4_netlist) | `qcell_connectivity.sp`: SPICE-format Q-cell connectivity, including input branches, bias pull-up and output stage. |
+| [4_netlist](4_netlist) | `qcell_netlist.sp`: SPICE-format Q-cell netlist, including input branches, bias pull-up and output stage. |
 
-## Quantization characterization
+## ADC transfer characteristics
 
-Switching boundaries were extracted from individual Q-cell input-voltage
-sweeps. The static code table evaluates those measured boundaries over
-0.70–1.20 V in 2 mV steps. `conversion_code` is an integer from 0 to 31;
-`decoder_output_5b` is the corresponding unsigned natural-binary code, D4 to D0.
+The table describes the static ADC input–output characteristic over
+0.70–1.20 V in 2 mV steps. `conversion_code` is the ADC quantized level
+(0–31); `decoder_output_5b` is the corresponding 5-bit ADC decoder code,
+using unsigned natural-binary encoding from D4 to D0. The code mapping is
+defined by the measured voltage boundaries in `measured_boundaries.csv`.
 Read the binary column as text to preserve leading zeros.
 
 Boundary and input voltages are in V. Intervals include their lower endpoint
@@ -24,19 +25,17 @@ and exclude their upper endpoint, except that 1.20 V belongs to code 31.
 The nominal LSB is 15.625 mV. The 31 boundaries yield maximum absolute
 INL/DNL of 0.303/0.503 LSB.
 
-## SSR mapping evaluation
+## SSR mapping example
 
-The table contains 10 repeats of 100 input points near a 0.98125 V boundary.
+The numerical example contains 1,000 paired-decision entries arranged in
+10 groups of 100 input points near a 0.98125 V boundary.
 `C1_bit` and `C2_bit` are logical decisions; `disagreement` is their XOR.
 The `*_value_v` columns contain mapped quantization values in V.
 Agreement selects a neighboring value and disagreement selects the target value.
 
-The CSV contains processed paired-decision data on a common input grid,
-used for numerical evaluation of the SSR output mapping.
-
 ## Boundary-programming benchmark
 
-The controller example uses a 0.856 V target and 5 mV acceptance tolerance.
+The boundary-placement sequence uses a 0.856 V target and 5 mV acceptance tolerance.
 Conductance is in uS, boundary voltage in V and boundary error in mV.
 The sequence is a numerical illustration of feedback decisions.
 
@@ -52,7 +51,8 @@ for mm2 or microjoules per image. Shares and reductions are percentages.
 
 The core inputs are 54 um2 at 28 nm and 20.736 fJ/conversion. Area is
 normalized to 14 nm as 54 × (14/28)^2 = 13.5 um2; energy is unchanged.
-ADC costs are rescaled from prior unit costs of 24.2944 um2 and 12.58 fJ.
+ADC area and energy inputs are applied to the network mappings for
+equivalent system-cost evaluation.
 Non-ADC costs follow the respective SAR and QIM model configurations.
 
 ## Q-cell netlist
@@ -63,7 +63,8 @@ MOS terminals are ordered drain, gate, source, bulk; memristors have two termina
 `ML` is the decision node and `VOUT` is the restored logic output.
 The remaining ports are supply and source-reference connections.
 
-Generic device identifiers preserve connectivity. Circuit simulation requires
+The netlist uses generic NMOS, PMOS and memristor model identifiers.
+Circuit simulation requires
 device models, sizing and bias definitions supplied separately. The distributed
 file contains no foundry-library references or process/layout parameters.
 

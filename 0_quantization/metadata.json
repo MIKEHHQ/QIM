@@ -8,7 +8,7 @@
   "boundary_count": 31,
   "code_count": 32,
   "code_encoding": "unsigned natural binary D4..D0",
-  "code_basis": "static mapping calculated from measured Q-cell transition voltages",
+  "code_basis": "static ADC voltage-to-code mapping defined by measured voltage boundaries",
   "source_transition_sha256": "0896a8322d5da6a0d640dbfff8dad31fa4d08c76ec67ddb06e2801f99247e00d",
   "source_sweep_sha256": "bf4a7ad87de1e5674943fdd45f632552e7542d38476ba6f8f34dea7940d6cb79"
 }
