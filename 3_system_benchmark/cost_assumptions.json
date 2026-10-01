@@ -3,9 +3,5 @@
   "normalized_benchmark_technology_nm": 14,
   "core_area_um2": 54,
   "normalized_core_area_um2": 13.5,
-  "core_energy_fj": 20.736,
-  "previous_adc_area_um2": 24.2944,
-  "previous_adc_energy_fj": 12.58,
-  "area_scale": 0.25,
-  "energy_scale": 1.0
+  "core_energy_fj": 20.736
 }
